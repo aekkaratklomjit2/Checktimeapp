@@ -1,10 +1,14 @@
 {
-  "name": "AwesomeProject",
-  "displayName": "AwesomeProject",
+  "name": "ChecktimeApp",
+  "displayName": "ChecktimeApp",
   "expo": {
-    "name": "AwesomeProject",
-    "slug": "AwesomeProject",
-    "version": "1.0.0",
+    "name": "ChecktimeApp",
+    "slug": "ChecktimeApp",
+    "version": "1.2.0",
+    "android": {
+      "package": "com.test.aekkarat",
+      "versionCode": 1
+    },
     "platforms": [
       "ios",
       "android",

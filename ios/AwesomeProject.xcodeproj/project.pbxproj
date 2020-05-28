@@ -14,6 +14,10 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		3DE4DAD41476765101945408 /* libPods-AwesomeProject.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D43FF9D506E70904424FA7E9 /* libPods-AwesomeProject.a */; };
 		99EC63CFB4B549BBAF093D10 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E3ABB89D1E68496EB7D95742 /* SplashScreen.storyboard */; };
+		388376172BD44FD8AC735A24 /* Segoe UI.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4F3A8023B75D45BFAA56AAF4 /* Segoe UI.ttf */; };
+		8749F665EF484038AF76BC24 /* Segoe UI Bold Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 739D203BAD8E433AACF5F647 /* Segoe UI Bold Italic.ttf */; };
+		64A6FAB226874E81829DACC4 /* Segoe UI Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 214B6FF113C0424195FD3243 /* Segoe UI Bold.ttf */; };
+		86EF2368A7454FC09C62DA03 /* Segoe UI Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 656879A045D74B7A89EB3B8E /* Segoe UI Italic.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +37,10 @@
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		E3ABB89D1E68496EB7D95742 /* SplashScreen.storyboard */ = {isa = PBXFileReference; name = "SplashScreen.storyboard"; path = "AwesomeProject/SplashScreen.storyboard"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = file.storyboard; };
+		4F3A8023B75D45BFAA56AAF4 /* Segoe UI.ttf */ = {isa = PBXFileReference; name = "Segoe UI.ttf"; path = "../src/assets/fonts/Segoe UI.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		739D203BAD8E433AACF5F647 /* Segoe UI Bold Italic.ttf */ = {isa = PBXFileReference; name = "Segoe UI Bold Italic.ttf"; path = "../src/assets/fonts/Segoe UI Bold Italic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		214B6FF113C0424195FD3243 /* Segoe UI Bold.ttf */ = {isa = PBXFileReference; name = "Segoe UI Bold.ttf"; path = "../src/assets/fonts/Segoe UI Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		656879A045D74B7A89EB3B8E /* Segoe UI Italic.ttf */ = {isa = PBXFileReference; name = "Segoe UI Italic.ttf"; path = "../src/assets/fonts/Segoe UI Italic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +107,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				72E5486571395D51695C2A02 /* Pods */,
+				FE037497B7DB48E89898884A /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -112,6 +121,18 @@
 			);
 			name = Products;
 			sourceTree = "<group>";
+		};
+		FE037497B7DB48E89898884A /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				4F3A8023B75D45BFAA56AAF4 /* Segoe UI.ttf */,
+				739D203BAD8E433AACF5F647 /* Segoe UI Bold Italic.ttf */,
+				214B6FF113C0424195FD3243 /* Segoe UI Bold.ttf */,
+				656879A045D74B7A89EB3B8E /* Segoe UI Italic.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -178,6 +199,10 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				99EC63CFB4B549BBAF093D10 /* SplashScreen.storyboard in Resources */,
+				388376172BD44FD8AC735A24 /* Segoe UI.ttf in Resources */,
+				8749F665EF484038AF76BC24 /* Segoe UI Bold Italic.ttf in Resources */,
+				64A6FAB226874E81829DACC4 /* Segoe UI Bold.ttf in Resources */,
+				86EF2368A7454FC09C62DA03 /* Segoe UI Italic.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
