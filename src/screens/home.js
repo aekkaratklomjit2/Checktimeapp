@@ -1,7 +1,6 @@
 import React from 'react'
-import { View,AsyncStorage,Alert,ImageBackground,TouchableOpacity,Image} from 'react-native'
+import { View,AsyncStorage,Alert,ImageBackground,TouchableOpacity,Imagem,Modal,Image,Text} from 'react-native'
 import {styles} from '../assets/css.js';
-import {  StackActions} from '@react-navigation/native';
 import * as Location from 'expo-location';
 import moment from 'moment';
 import {Positionframe,Infoframe,Checkinout} from '../components/';
@@ -19,6 +18,7 @@ export default class home extends React.Component {
           username : '',
           checkState : '', 
           loaded: false,
+          LoginAlert: false,
         }
         this.onLoad();
       }
@@ -172,6 +172,9 @@ export default class home extends React.Component {
             { cancelable: false }
           );
         }
+        LoginAlert(visible) {
+          this.setState({LoginAlert: visible});
+        }
     render() {
       let button,background;
       if (this.state.checkState==false||this.state.checkState==null) {
@@ -194,7 +197,7 @@ export default class home extends React.Component {
         <ScrollView>
           <View style={styles.container}>
               <View style={{position: 'absolute',right: -12,top: 0,paddingTop:12,}}>
-                  <TouchableOpacity onPress={this.logout} style={{ height: 52, 
+                  <TouchableOpacity onPress={() => {this.LoginAlert(true)}} style={{ height: 52, 
                                                 width:102,
                                                 justifyContent: 'center',
                                                 alignItems: 'center',}}>
@@ -202,8 +205,58 @@ export default class home extends React.Component {
                   </TouchableOpacity>
               </View>
               <Infoframe name="Aekkarat Klomjit (Saam)" username="aekkarat_"/>
+              
               <Positionframe positionname='Graphic Design'/>          
               {button}
+                                <Modal
+                                animationType="fade"
+                                transparent={true}
+                                visible={this.state.LoginAlert} onRequestClose={() => {alert('Modal has been closed.');}}>
+                            <View style={{
+                                flex: 1,flexDirection:'column',
+                                justifyContent: 'center',
+                                alignItems: 'center'}} >
+                              <View style={{          width:300,
+          height:273,
+          backgroundColor:"white",
+          padding:2,
+          borderRadius: 10,
+          borderWidth : 2,
+          paddingTop:15,
+          paddingLeft:15,
+          shadowColor: "#000",
+          shadowOffset: {
+            width: 0,
+            height: 5,
+          },
+          shadowOpacity: 0.36,
+          shadowRadius: 6.68,
+          elevation: 11,}}>
+                                  <Text style={styles.BoldFontModal}>Do you want to log-out?</Text>                             
+                              <View style={{           justifyContent: 'center',
+          alignItems: 'center',    
+          paddingRight: 15,
+          paddingTop:33,
+          color :"#841584"}}>
+                                <TouchableOpacity style={{          height: 36, 
+          width:90, 
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: '#0000BB',}}
+                                  onPress={() => {
+                                    this.LoginAlert(!this.state.LoginAlert);
+                                  }}>
+                                  <Text  style={{color:'white',fontWeight:'bold'}}>NO</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={{height: 36, width:90, justifyContent: 'center',alignItems: 'center',backgroundColor: '#0000BB',}}
+                                  onPress={() => {
+                                    this.logout(), this.LoginAlert(!this.state.LoginAlert);}}>
+                                  <Text  style={{color:'white',fontWeight:'bold'}}>YES</Text>
+                                </TouchableOpacity>
+                                </View>
+                              </View>
+                            </View>
+                          </Modal>
             </View>
           </ScrollView>
         </ImageBackground>
