@@ -101,6 +101,7 @@ export default class home extends React.Component {
             { cancelable: false }
           );
         }
+
         checkout = async () =>{
           Alert.alert(
             "Alert Title",
@@ -160,6 +161,8 @@ export default class home extends React.Component {
             }
               ,
               { text: "YES", onPress: async () =>{
+                //const username = await AsyncStorage.getItem('Async_username')
+                //console.log('Before '+username)
                 await AsyncStorage.removeItem('Async_username')
                 console.log("OK Pressed")   
                 Actions.loading()
@@ -184,7 +187,8 @@ export default class home extends React.Component {
                             colorcheckin={styles.colorbuttonuseunuse} 
                             colorcheckout={styles.colorbuttonuse}
                             textcheckin={styles.Textunuse}
-                            textcheckout ={styles.Textuse}/>}
+                            textcheckout ={styles.Textuse}/>
+      }
         return (
       <ImageBackground source={background} style={styles.bg}>
         <ScrollView>
