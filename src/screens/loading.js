@@ -10,10 +10,8 @@ export default class loading extends React.Component {
     componentDidMount(){
         this.onLoad()
       }
-
     onLoad = async () =>{
         const currentUser = await AsyncStorage.getItem('Async_username')
-        //console.log(currentUser)
         this.setState({username : currentUser})
         console.log(this.state.username)
         if(this.state.username==null){

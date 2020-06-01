@@ -20,9 +20,9 @@ class Historyframe extends React.Component{
               transparent={true}
               visible={this.state.modalVisible} onRequestClose={() => {alert('Modal has been closed.');}}>
           <View style={{
-              flex: 1,flexDirection:'column',
-              justifyContent: 'center',
-              alignItems: 'center'}} >
+                  flex: 1,flexDirection:'column',
+                  justifyContent: 'center',
+                  alignItems: 'center'}} >
             <View style={styles.modalbox}>
                 <Text style={styles.BoldFontModal}>{this.props.date}</Text>
                 <Text style={styles.FontModal}>Check-in    :   {this.props.checkin}</Text>
@@ -40,6 +40,11 @@ class Historyframe extends React.Component{
               </View>
             </View>
           </View>
+
+
+
+
+          
         </Modal>
             <TouchableOpacity onPress={() => {this.setModalVisible(true)}}>
                 <View style={styles.midPicture}>
@@ -48,7 +53,7 @@ class Historyframe extends React.Component{
                 <Text style={styles.Font}>Check-in    :   {this.props.checkin}</Text>
                 <Text style={styles.Font}>Check-out  :   {this.props.checkout}</Text>
                 <Text style={styles.Font}>status         :   {this.props.status}</Text>
-                <Text style={styles.Font}>note             :   {message}{"\n"}</Text>
+                <Text style={styles.Font}>note             :   {message}</Text>
                 </View></View>
             </TouchableOpacity>
           </View>
@@ -143,7 +148,7 @@ class Historyframe extends React.Component{
           justifyContent: 'center',
           alignItems: 'center',    
           paddingRight: 15,
-          paddingTop:33,
+          paddingTop:12,
           color :"#841584"
         },
         BoldFontModal :{

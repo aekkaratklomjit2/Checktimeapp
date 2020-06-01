@@ -20,8 +20,7 @@ class Infoframe extends React.Component{
         midPicture: {
             justifyContent: 'center',
             alignItems: 'center',
-            paddingTop :15,
-            paddingBottom:6
+            paddingBottom:6,
         },
         circlepic: {
             width: 120, 
@@ -32,6 +31,7 @@ class Infoframe extends React.Component{
             borderWidth:2
         },
         BoldFont :{
+            paddingTop:21,
             paddingBottom:5,
             fontSize:21,
             color: 'black',

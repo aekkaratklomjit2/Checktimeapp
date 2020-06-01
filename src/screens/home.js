@@ -1,27 +1,29 @@
 import React from 'react'
-import { View,AsyncStorage,Alert,ImageBackground,TouchableOpacity,Imagem,Modal,Image,Text} from 'react-native'
+import { View,AsyncStorage,Alert,ImageBackground,TouchableOpacity,Image} from 'react-native'
 import {styles} from '../assets/css.js';
 import * as Location from 'expo-location';
 import moment from 'moment';
-import {Positionframe,Infoframe,Checkinout} from '../components/';
+import {Positionframe,Infoframe,Checkinout,ButtonLogout} from '../components/';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Actions } from 'react-native-router-flux';
 const image = require('../assets/bg_checkin.png');
 const image1 =require('../assets/bg_checkout.png');
-
-
-
 export default class home extends React.Component {
-    constructor(prop){
-        super(prop)
+    constructor(props){
+        super(props)
         this.state ={
           username : '',
           checkState : '', 
           loaded: false,
           LoginAlert: false,
+          display : false,
+          opacitydisplay : false
         }
         this.onLoad();
       }
+      triggerLogout(visible,opacity) {
+        this.setState({display: visible,opacitydisplay:opacity})
+        }
         onLoad = async () => {
             try {
                 const username = await AsyncStorage.getItem('Async_username')
@@ -150,54 +152,43 @@ export default class home extends React.Component {
           );
         }
         logout = async () =>{
-          Alert.alert(
-            "Alert",
-            "Do you want to log out?",
-            [
-            {
-              text: "NO",
-              onPress: () => console.log("Cancel Pressed"),
-              style: "cancel"
-            }
-              ,
-              { text: "YES", onPress: async () =>{
-                //const username = await AsyncStorage.getItem('Async_username')
-                //console.log('Before '+username)
                 await AsyncStorage.removeItem('Async_username')
-                console.log("OK Pressed")   
+                console.log("OK Pressed")
+                this.triggerLogout(false)   
                 Actions.loading()
                 }
-            }
-            ],
-            { cancelable: false }
-          );
-        }
-        LoginAlert(visible) {
-          this.setState({LoginAlert: visible});
-        }
     render() {
-      let button,background;
+      let buttoncheckin,buttoncheckout,background;
       if (this.state.checkState==false||this.state.checkState==null) {
         background = image;
-        button = <Checkinout onclickcheckin={this.checkin} 
-                             colorcheckin={styles.colorbuttonuse} 
-                             colorcheckout={styles.colorbuttonuseunuse}
-                             textcheckin={styles.Textuse}
-                             textcheckout ={styles.Textunuse}/>
+        buttoncheckin = <Checkinout onclick={this.checkin}
+                              colorclick ={styles.colorbuttonuse}
+                              styletextclick={styles.Textuse}
+                              textclick="CHECK IN"/>
+        buttoncheckout = <Checkinout onclick={null}
+                              colorclick ={styles.colorbuttonuseunuse}
+                              styletextclick={styles.Textunuse}
+                              textclick="CHECK OUT"/>
       } else {
         background = image1;
-        button = <Checkinout onclickcheckout={this.checkout} 
-                            colorcheckin={styles.colorbuttonuseunuse} 
-                            colorcheckout={styles.colorbuttonuse}
-                            textcheckin={styles.Textunuse}
-                            textcheckout ={styles.Textuse}/>
+        buttoncheckin = <Checkinout onclick={null}
+                              colorclick ={styles.colorbuttonuseunuse}
+                              styletextclick={styles.Textunuse}
+                              textclick="CHECK IN"/>
+        buttoncheckout = <Checkinout onclick={this.checkout}
+                              colorclick ={styles.colorbuttonuse}
+                              styletextclick={styles.Textuse}
+                              textclick="CHECK OUT"/>
       }
         return (
-      <ImageBackground source={background} style={styles.bg}>
+      <ImageBackground source={background} style={{...styles.bg}}>
         <ScrollView>
+          <View style={{...this.state.opacitydisplay
+                            ? styles.opacity2
+                            : styles.opacity1}}>
           <View style={styles.container}>
-              <View style={{position: 'absolute',right: -12,top: 0,paddingTop:12,}}>
-                  <TouchableOpacity onPress={() => {this.LoginAlert(true)}} style={{ height: 52, 
+              <View style={{position: 'absolute',right: -72,top: -21,paddingTop:0,}}>
+                  <TouchableOpacity onPress={() => {this.triggerLogout(true,true)}} style={{ height: 52, 
                                                 width:102,
                                                 justifyContent: 'center',
                                                 alignItems: 'center',}}>
@@ -205,58 +196,18 @@ export default class home extends React.Component {
                   </TouchableOpacity>
               </View>
               <Infoframe name="Aekkarat Klomjit (Saam)" username="aekkarat_"/>
-              
-              <Positionframe positionname='Graphic Design'/>          
-              {button}
-                                <Modal
-                                animationType="fade"
-                                transparent={true}
-                                visible={this.state.LoginAlert} onRequestClose={() => {alert('Modal has been closed.');}}>
-                            <View style={{
-                                flex: 1,flexDirection:'column',
-                                justifyContent: 'center',
-                                alignItems: 'center'}} >
-                              <View style={{          width:300,
-          height:273,
-          backgroundColor:"white",
-          padding:2,
-          borderRadius: 10,
-          borderWidth : 2,
-          paddingTop:15,
-          paddingLeft:15,
-          shadowColor: "#000",
-          shadowOffset: {
-            width: 0,
-            height: 5,
-          },
-          shadowOpacity: 0.36,
-          shadowRadius: 6.68,
-          elevation: 11,}}>
-                                  <Text style={styles.BoldFontModal}>Do you want to log-out?</Text>                             
-                              <View style={{           justifyContent: 'center',
-          alignItems: 'center',    
-          paddingRight: 15,
-          paddingTop:33,
-          color :"#841584"}}>
-                                <TouchableOpacity style={{          height: 36, 
-          width:90, 
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: '#0000BB',}}
-                                  onPress={() => {
-                                    this.LoginAlert(!this.state.LoginAlert);
-                                  }}>
-                                  <Text  style={{color:'white',fontWeight:'bold'}}>NO</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={{height: 36, width:90, justifyContent: 'center',alignItems: 'center',backgroundColor: '#0000BB',}}
-                                  onPress={() => {
-                                    this.logout(), this.LoginAlert(!this.state.LoginAlert);}}>
-                                  <Text  style={{color:'white',fontWeight:'bold'}}>YES</Text>
-                                </TouchableOpacity>
-                                </View>
-                              </View>
-                            </View>
-                          </Modal>
+              <Positionframe positionname='Graphic Design'/> 
+              <View style={{flexDirection:"row",justifyContent: 'center',alignItems: 'center',paddingTop:30}}>        
+              {buttoncheckin}
+              {buttoncheckout} 
+              </View>            
+          <ButtonLogout
+            message = "Do you want to log-out?"
+            display = {this.state.display}
+            hide ={() => this.triggerLogout(false)}
+            logout = {() => this.logout()}
+          />
+            </View>
             </View>
           </ScrollView>
         </ImageBackground>

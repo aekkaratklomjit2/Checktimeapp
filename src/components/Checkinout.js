@@ -3,18 +3,11 @@ import { Text,TouchableOpacity, View,StyleSheet} from 'react-native'
 class Checkinout extends React.Component{
     render(){
         return(
-            <View style={{flexDirection:"row",justifyContent: 'center',alignItems: 'center',paddingTop:30}}>
                 <View style={styles.button}>
-                 <TouchableOpacity key='buttoncheckin' onPress={this.props.onclickcheckin} style={this.props.colorcheckin}>
-                    <Text style={this.props.textcheckin}>CHECK IN</Text>
-                  </TouchableOpacity> 
+                <TouchableOpacity onPress={this.props.onclick} style={this.props.colorclick}>
+                <Text style={this.props.styletextclick}>{this.props.textclick}</Text>
+                </TouchableOpacity> 
                 </View>
-                <View style={styles.button}>
-                 <TouchableOpacity key='buttoncheckout' onPress={this.props.onclickcheckout} style={this.props.colorcheckout}>
-                    <Text style={this.props.textcheckout}>CHECK OUT</Text>
-                  </TouchableOpacity> 
-                </View>
-            </View>
         )
     }
 }

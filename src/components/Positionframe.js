@@ -1,6 +1,5 @@
 import React from 'react'
 import { Text, Image, View ,StyleSheet} from 'react-native'
-import { color } from 'react-native-reanimated';
 class Positionframe extends React.Component{
         render(){
         return (
@@ -21,7 +20,6 @@ class Positionframe extends React.Component{
             paddingTop:15,
             width:300,
             height:52,
-            backgroundColor:"white",
             flexDirection:"row",
             alignItems: 'center',
             justifyContent: 'center',
@@ -44,7 +42,7 @@ class Positionframe extends React.Component{
               color:'black'
               },
         midPicture: {
-                paddingTop:15,
+                paddingTop:21,
                 justifyContent: 'center',
                 alignItems: 'center',
             },
