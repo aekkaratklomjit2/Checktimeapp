@@ -25,11 +25,17 @@ class Historyframe extends React.Component{
                   alignItems: 'center'}} >
             <View style={styles.modalbox}>
                 <Text style={styles.BoldFontModal}>{this.props.date}</Text>
-                <Text style={styles.FontModal}>Check-in    :   {this.props.checkin}</Text>
-                <Text style={styles.FontModal}>Check-out  :   {this.props.checkout}</Text>
-                <Text style={styles.FontModal}>status         :   {this.props.status}</Text>
-                <View style={{paddingTop:15}}>
-                <Text style={{...styles.FontModal,fontWeight:'bold'}}>NOTE :   </Text><Text style={styles.FontModal}>{this.props.note}</Text></View>
+                <View style={styles.rowcolumn}>
+                <Text style={styles.SecBoldFontModal}>Check-in    :   </Text><Text style={styles.FontModal}>{this.props.checkin}</Text>
+                </View>
+                <View style={styles.rowcolumn}>
+                <Text style={styles.SecBoldFontModal}>Check-out  :   </Text><Text style={styles.FontModal}>{this.props.checkout}</Text>
+                </View>
+                <View style={styles.rowcolumn}>
+                <Text style={styles.SecBoldFontModal}>Status         :   </Text><Text style={styles.FontModal}>{this.props.status}</Text>
+                </View>
+                <View style={{...styles.rowcolumn,paddingTop:39}}>
+                <Text style={{...styles.SecBoldFontModal,fontWeight:'bold'}}>Note :   </Text><Text style={styles.FontModal}>{this.props.note}</Text></View>
             <View style={styles.button}>
               <TouchableOpacity style={styles.loginbutton}
                 onPress={() => {
@@ -50,10 +56,14 @@ class Historyframe extends React.Component{
                 <View style={styles.midPicture}>
                 <View style={styles.Historyframe}>
                 <Text style={styles.BoldFont}>{this.props.date}</Text>
-                <Text style={styles.Font}>Check-in    :   {this.props.checkin}</Text>
-                <Text style={styles.Font}>Check-out  :   {this.props.checkout}</Text>
-                <Text style={styles.Font}>status         :   {this.props.status}</Text>
-                <Text style={styles.Font}>note             :   {message}</Text>
+                <View style={styles.rowcolumn}>
+                <Text style={styles.Font}>Check-in     :   </Text><Text style={styles.FontModal}>{this.props.checkin}</Text></View>
+                <View style={styles.rowcolumn}>
+                <Text style={styles.Font}>Check-out  :    </Text><Text style={styles.FontModal}>{this.props.checkout}</Text></View>
+                <View style={styles.rowcolumn}>
+                <Text style={styles.Font}>Status          :    </Text><Text style={styles.FontModal}>{this.props.status}</Text></View>
+                <View style={styles.rowcolumn}>
+                <Text style={styles.Font}>Note             :    </Text><Text style={styles.FontModal}>{message}</Text></View>
                 </View></View>
             </TouchableOpacity>
           </View>
@@ -64,12 +74,11 @@ class Historyframe extends React.Component{
     export default Historyframe;
     const styles = StyleSheet.create({
         Historyframe: {
-            width:240,
-            height:150,
+            width:316,
+            height:196,
             backgroundColor:"white",
             padding:2,
-            borderRadius: 10,
-            borderWidth : 2,
+            borderRadius: 3,
             paddingTop:15,
             paddingLeft:15,
             shadowColor: "#000",
@@ -81,38 +90,6 @@ class Historyframe extends React.Component{
             shadowRadius: 6.68,
             elevation: 11,
         },
-        Historyframeafter:{
-          width:300,
-          height:165,
-          backgroundColor:"white",
-          padding:2,
-          borderRadius: 10,
-          borderWidth : 2,
-          paddingTop:15,
-          paddingLeft:15,
-          shadowColor: "#000",
-          shadowOffset: {
-            width: 0,
-            height: 5,
-          },
-          shadowOpacity: 0.36,
-          shadowRadius: 6.68,
-          elevation: 11,
-          opacity:0.1
-        },
-        BoldFont :{
-          paddingLeft:3,
-          paddingBottom:9,  
-          fontSize:15,
-          color: 'black',
-          fontWeight:'bold'
-        },
-        Font :{
-          fontSize:12,
-          paddingLeft:27 ,
-          paddingBottom:6,
-          color: 'black',
-        },
         midPicture: {
           justifyContent: 'center',
           alignItems: 'center',
@@ -120,8 +97,8 @@ class Historyframe extends React.Component{
           paddingBottom:6
       },
         modalbox:{
-          width:300,
-          height:273,
+          width:330,
+          height:294,
           backgroundColor:"white",
           padding:2,
           borderRadius: 10,
@@ -148,13 +125,20 @@ class Historyframe extends React.Component{
           justifyContent: 'center',
           alignItems: 'center',    
           paddingRight: 15,
-          paddingTop:12,
+          paddingTop:30,
           color :"#841584"
         },
         BoldFontModal :{
           paddingLeft:3,
-          paddingBottom:9,  
+          paddingBottom:21,  
           fontSize:18,
+          color: 'black',
+          fontWeight:'bold'
+        },
+        SecBoldFontModal :{
+          paddingLeft:3,
+          paddingBottom:3,  
+          fontSize:15,
           color: 'black',
           fontWeight:'bold'
         },
@@ -164,6 +148,23 @@ class Historyframe extends React.Component{
           paddingBottom:6,
           color: 'black',
         },
+        BoldFont :{
+          paddingLeft:3,
+          paddingBottom:18  ,  
+          fontSize:15,
+          color: 'black',
+          fontWeight:'bold'
+        },
+        Font :{
+          fontSize:15,
+          paddingLeft:27 ,
+          paddingBottom:6,
+          color: 'black',
+          fontWeight:'bold'
+        },
+        rowcolumn:{
+          flexDirection: 'row'
+        }
  
       });
 

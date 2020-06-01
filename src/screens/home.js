@@ -3,9 +3,10 @@ import { View,AsyncStorage,Alert,ImageBackground,TouchableOpacity,Image} from 'r
 import {styles} from '../assets/css.js';
 import * as Location from 'expo-location';
 import moment from 'moment';
-import {Positionframe,Infoframe,Checkinout,ButtonLogout} from '../components/';
+import {Positionframe,Infoframe,Checkinout,ModalLogout} from '../components/';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Actions } from 'react-native-router-flux';
+import { set } from 'react-native-reanimated';
 const image = require('../assets/bg_checkin.png');
 const image1 =require('../assets/bg_checkout.png');
 export default class home extends React.Component {
@@ -55,6 +56,11 @@ export default class home extends React.Component {
                 let date = moment()
                     .utcOffset('+07:00')
                     .format('LT')
+                let setdate = moment().format('h');
+                let setdate1 = moment().format('mm');
+                let setdate2 = moment().format('a');
+                setdate = parseInt(setdate,'10')
+                setdate1 = parseInt(setdate1,'10')
                 console.log(date)
                 if (status !== 'granted') {
                   setErrorMsg('Permission to access location was denied');
@@ -187,7 +193,7 @@ export default class home extends React.Component {
                             ? styles.opacity2
                             : styles.opacity1}}>
           <View style={styles.container}>
-              <View style={{position: 'absolute',right: -72,top: -21,paddingTop:0,}}>
+              <View style={{position: 'absolute',right: -54,top: -9,paddingTop:0,}}>
                   <TouchableOpacity onPress={() => {this.triggerLogout(true,true)}} style={{ height: 52, 
                                                 width:102,
                                                 justifyContent: 'center',
@@ -201,7 +207,7 @@ export default class home extends React.Component {
               {buttoncheckin}
               {buttoncheckout} 
               </View>            
-          <ButtonLogout
+          <ModalLogout
             message = "Do you want to log-out?"
             display = {this.state.display}
             hide ={() => this.triggerLogout(false)}

@@ -31,7 +31,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',    
     paddingRight: 15,
-    paddingTop:33,
+    paddingTop:42,
     color :"#841584"
   },
   circlepic:{

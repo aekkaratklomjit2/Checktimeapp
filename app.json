@@ -9,6 +9,10 @@
       "package": "com.test.aekkarat",
       "versionCode": 1
     },
+    "ios": {
+      "bundleIdentifier": "com.Aekkarat.aekkarat",
+      "buildNumber": "1.0.0"
+    },
     "platforms": [
       "ios",
       "android",
