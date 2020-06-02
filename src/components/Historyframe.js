@@ -25,33 +25,29 @@ class Historyframe extends React.Component{
                   alignItems: 'center'}} >
             <View style={styles.modalbox}>
                 <Text style={styles.BoldFontModal}>{this.props.date}</Text>
-                <View style={styles.rowcolumn}>
-                <Text style={styles.SecBoldFontModal}>Check-in    :   </Text><Text style={styles.FontModal}>{this.props.checkin}</Text>
-                </View>
-                <View style={styles.rowcolumn}>
-                <Text style={styles.SecBoldFontModal}>Check-out  :   </Text><Text style={styles.FontModal}>{this.props.checkout}</Text>
-                </View>
-                <View style={styles.rowcolumn}>
-                <Text style={styles.SecBoldFontModal}>Status         :   </Text><Text style={styles.FontModal}>{this.props.status}</Text>
-                </View>
-                <View style={{...styles.rowcolumn,paddingTop:39}}>
-                <Text style={{...styles.SecBoldFontModal,fontWeight:'bold'}}>Note :   </Text><Text style={styles.FontModal}>{this.props.note}</Text></View>
-            <View style={styles.button}>
-              <TouchableOpacity style={styles.loginbutton}
-                onPress={() => {
-                  this.setModalVisible(!this.state.modalVisible,!this.state.Historyframeopacity);
-                }}>
-                <Text  style={{color:'white',fontWeight:'bold'}}>CLOSE</Text>
-              </TouchableOpacity>
+                  <View style={styles.rowcolumn}>
+                    <Text style={styles.SecBoldFontModal}>Check-in    :   </Text><Text style={styles.FontModal}>{this.props.checkin}</Text>
+                  </View>
+                  <View style={styles.rowcolumn}>
+                    <Text style={styles.SecBoldFontModal}>Check-out  :   </Text><Text style={styles.FontModal}>{this.props.checkout}</Text>
+                  </View>
+                  <View style={styles.rowcolumn}>
+                    <Text style={styles.SecBoldFontModal}>Status         :   </Text><Text style={styles.FontModal}>{this.props.status}</Text>
+                  </View>
+                  <View style={{...styles.rowcolumn,paddingTop:39}}>
+                    <Text style={{...styles.SecBoldFontModal,fontWeight:'bold'}}>Note :   </Text><Text style={styles.FontModal}>{this.props.note}</Text></View>
+                <View style={styles.button}>
+                  <TouchableOpacity style={styles.loginbutton}
+                      onPress={() => {
+                      this.setModalVisible(!this.state.modalVisible,!this.state.Historyframeopacity);
+                      }}>
+                   <Text  style={{color:'white',fontWeight:'bold'}}>CLOSE</Text>
+                  </TouchableOpacity>
               </View>
             </View>
           </View>
-
-
-
-
-          
         </Modal>
+        
             <TouchableOpacity onPress={() => {this.setModalVisible(true)}}>
                 <View style={styles.midPicture}>
                 <View style={styles.Historyframe}>

@@ -6,7 +6,6 @@ import moment from 'moment';
 import {Positionframe,Infoframe,Checkinout,ModalLogout} from '../components/';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Actions } from 'react-native-router-flux';
-import { set } from 'react-native-reanimated';
 const image = require('../assets/bg_checkin.png');
 const image1 =require('../assets/bg_checkout.png');
 export default class home extends React.Component {
@@ -39,7 +38,7 @@ export default class home extends React.Component {
         }
         checkin = async () =>{
           Alert.alert(
-            'Alert Title',
+            '',
             'Do you want to Check in ?',
             [
               {
@@ -109,10 +108,9 @@ export default class home extends React.Component {
             { cancelable: false }
           );
         }
-
         checkout = async () =>{
           Alert.alert(
-            "Alert Title",
+            "",
             "Do you want to check out",
             [
               {

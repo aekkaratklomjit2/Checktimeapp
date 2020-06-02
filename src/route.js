@@ -1,5 +1,4 @@
 import React from 'react';
-import { createStackNavigator ,TransitionPresets} from '@react-navigation/stack';
 import {  NavigationContainer} from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {Icon} from'react-native-elements';
@@ -7,9 +6,7 @@ import login from './screens/login.js';
 import home from './screens/home';
 import report from './screens/report';
 import loading from './screens/loading';
-import {Actions, Router, Scene} from "react-native-router-flux";
-
-const Stack = createStackNavigator();
+import {Router, Scene} from "react-native-router-flux";
 const Tab = createBottomTabNavigator();
 function AppNavigator() {
   return (
@@ -67,12 +64,9 @@ function HomeTabs() {
           color={color} size={size} />
         ),
       }}/>
-
     </Tab.Navigator>
   );
 }
-
-
 export default AppNavigator;
 
 

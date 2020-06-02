@@ -24,7 +24,6 @@ class InfoHisframe extends React.Component{
             alignItems: 'center',
             paddingTop:15,
             paddingBottom:50,
-            
         },
         circlepic: {
             width: 72, 
