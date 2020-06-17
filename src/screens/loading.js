@@ -4,28 +4,29 @@ export default class loading extends React.Component {
     constructor(prop){
         super(prop)
         this.state ={
-          username : '',
+          access_Token : '',
         }
-      }
-    componentDidMount(){
         this.onLoad()
       }
+     componentDidUpdate(){
+         this.onLoad()
+       }
     onLoad = async () =>{
-        const currentUser = await AsyncStorage.getItem('Async_username')
-        this.setState({username : currentUser})
-        console.log(this.state.username)
-        if(this.state.username==null){
-          this.props.navigation.navigate('login')
-        }else{this.props.navigation.navigate('home')}
-    }
+        const access_Token = await AsyncStorage.getItem('access_Token')
+        this.setState({access_Token : access_Token})
+         if(this.state.access_Token==null){
+           this.props.navigation.navigate('login')
+         }else{this.props.navigation.navigate('home')}
+      }
     render() {
+
       return (
         <View style={styles.container}>
           <Text>Loading</Text>
           <ActivityIndicator size="large" />
-        </View>
-      )
-    }
+        </View> 
+        )
+      }
   }
   const styles = StyleSheet.create({
     container: {

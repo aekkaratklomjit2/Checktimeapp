@@ -1,15 +1,19 @@
 import React from 'react'
 import { Text, Image, View ,StyleSheet} from 'react-native'
+import BaseUrl from '../config/BaseUrl.json'
 class InfoHisframe extends React.Component{
         render(){
         return (
         <View>
             <View style={styles.View}>
                 <View >
-                <Image source={require('../assets/person.png')} style={styles.circlepic}/>
+                <Image source={{uri: BaseUrl.BaseUrl+'/'+this.props.image}}style={styles.circlepic}/>
                 </View>
             <View>
-                <Text style={styles.BoldFont}>{this.props.name}</Text>
+            <View style={styles.rowcolumn}>
+                <Text style={{...styles.BoldFont,paddingLeft:30,}}>{this.props.firstname}</Text>
+                <Text style={styles.BoldFont}>  {this.props.lastname}</Text>
+            </View>
                 <Text style={styles.Font}>{this.props.username}</Text>
             </View>
             </View>
@@ -22,8 +26,8 @@ class InfoHisframe extends React.Component{
         View: {
             flexDirection:"row",
             alignItems: 'center',
-            paddingTop:15,
-            paddingBottom:50,
+            paddingTop:12,
+            paddingBottom:21,
         },
         circlepic: {
             width: 72, 
@@ -34,8 +38,8 @@ class InfoHisframe extends React.Component{
         },
         BoldFont :{
             paddingBottom:1,
-            paddingLeft:30,
             fontSize:18,
+            fontWeight:'bold',
             color: 'black',
         },
         Font :{
@@ -43,7 +47,10 @@ class InfoHisframe extends React.Component{
             paddingLeft:30,
             fontSize:15,
             color: 'black',
-        }
+        },
+        rowcolumn:{
+            flexDirection: 'row'
+          },
       });
 
       

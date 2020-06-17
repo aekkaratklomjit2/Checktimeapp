@@ -1,31 +1,24 @@
 import React from 'react'
-import { AsyncStorage,Text, TextInput, View, TouchableOpacity ,Image,ImageBackground} from 'react-native'
+import { AsyncStorage,Text, TextInput, View, TouchableOpacity,ImageBackground} from 'react-native'
 import {styles} from '../assets/css.js';
 import { ScrollView } from 'react-native-gesture-handler';
 import {LoginTop} from '../components/';
 import {Icon} from'react-native-elements';
 import {post} from '../helper/request';
-import * as axios from 'axios';
 export default class login extends React.Component {
   constructor(prop){
     super(prop)
     this.state ={
       username : '',
       password : '',
-      format : /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/,
       errorMessage : null,
       coloruser:'',
       colorpass:'',
       icon:"eye-slash",
       hidepassword : true,
     }
-    this.IDvalid ={
-      username : 'aekkarat',
-      password : 'klomjit'
-    }
   }
   Login = async () =>{
-    this.setState({errorMessage : "Incorrect username or password."})
     if(this.state.username=="" && this.state.password==""){
         this.setState({errorMessage : "Please enter username and password.",coloruser:'red',colorpass:'red'})
       }
@@ -35,35 +28,31 @@ export default class login extends React.Component {
       else if (this.state.password==""){
         this.setState({errorMessage : "Please enter password.",coloruser:'black',colorpass:'red'})
       }
-      // else if (this.state.username==this.IDvalid.username&&this.state.password==this.IDvalid.password){
-      //     try {
-      //       await AsyncStorage.setItem('Async_username', this.state.username)
-      //     } catch (e) {
-      //       console.log(e)
-      //     }
-      //     this.setState({username:null,password:null,coloruser:null,colorpass:null,errorMessage:null})
-      //     console.log(this.state.password)
-      //     this.props.navigation.navigate('home')
-      // }
       else{ 
+        console.log(this.state.username)
+        console.log(this.state.password)
         post('/login',{"username" : this.state.username,"password" : this.state.password})
         .then((response) => {
-          if (response.data.message=='')
-          console.log(response.data.message);
-          this.setState({errorMessage : response.data.message})
-        })
-       
+          if (response.data.message=='Incorrect username or password'){
+            console.log(response.data.message)
+          this.setState({errorMessage : response.data.message+'.'})
+          }if(response.data.message=='login sucessfull'){
+            this.setState({username:null,password:null,coloruser:null,colorpass:null,errorMessage:null})
+            this.setStringValue(response.data.Token)
+            console.log(response.data.Token)
+            this.props.navigation.navigate('loading') }})
       }
     }
-  _ChangeIconTohidePassword(){
-    this.setState(prevState => ({
-      icon : prevState.icon ==='eye' ? 'eye-slash' : 'eye',
-      hidepassword: !prevState.hidepassword
-    }))
-  }
-
-
-
+    setStringValue = async (value) => {
+      await AsyncStorage.setItem('access_Token',value)
+    }
+    _ChangeIconTohidePassword(){
+      this.setState(prevState => ({
+        icon : prevState.icon ==='eye' ? 'eye-slash' : 'eye',
+        hidepassword: !prevState.hidepassword
+      }
+      ))
+    }
   render() {
     return (
     <ImageBackground source={require('../assets/bg_login.png')} style={styles.bg}>

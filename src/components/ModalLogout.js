@@ -11,7 +11,7 @@ class ButtonLogout extends React.Component{
             <View style={styles.containview}>
                 <View style={styles.boxview}>
                  <View style={styles.FirstViewBox}>   
-                    <Image style={{width:42,height:42}} source={require('../assets/icon_warnning.png')} />
+                    <Image style={{width:51,height:51}} source={require('../assets/icon_warnning.png')} />
                     <Text style={{...styles.Font,paddingTop:12}}>{this.props.message}</Text>
                     </View>
                 <View style={styles.SecViewBox}>
@@ -42,8 +42,8 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     boxview :{
-        width:240,
-        height:171,
+        width:270,
+        height:200,
         backgroundColor:"white",
         borderRadius: 3,
         shadowColor: "#000",
@@ -59,26 +59,26 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         paddingBottom:1,
-        fontSize:16,
+        fontSize:18,
         color: 'black',
     },
     FirstViewBox:{
         justifyContent: 'center',
         alignItems: 'center',
-        paddingTop:18,
-        paddingBottom:9
+        paddingTop:21,
+        paddingBottom:0
     },
     SecViewBox:{
         flexDirection:"row",
         alignItems: 'center',
         justifyContent: 'center',
-        paddingTop:15
+        paddingTop:18
     },
     ThirdViewBox:{
-        justifyContent: 'center',alignItems: 'center',paddingRight: 9
+        justifyContent: 'center',alignItems: 'center',padding:9
     },
     ButtonTouch:{
-        height: 30, width:60, justifyContent: 'center',alignItems: 'center',
+        height: 33, width:70, justifyContent: 'center',alignItems: 'center',
     }
   });
 

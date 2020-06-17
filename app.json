@@ -9,6 +9,7 @@
       "package": "com.test.aekkarat",
       "versionCode": 1
     },
+    "icon": "./src/assets/icon_app.png",
     "ios": {
       "bundleIdentifier": "com.Aekkarat.aekkarat",
       "buildNumber": "1.0.0"

@@ -3,149 +3,145 @@ import { View,AsyncStorage,Alert,ImageBackground,TouchableOpacity,Image} from 'r
 import {styles} from '../assets/css.js';
 import * as Location from 'expo-location';
 import moment from 'moment';
-import {Positionframe,Infoframe,Checkinout,ModalLogout} from '../components/';
+import {Infoframe,Checkinout,ModalLogout} from '../components/';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Actions } from 'react-native-router-flux';
-const image = require('../assets/bg_checkin.png');
-const image1 =require('../assets/bg_checkout.png');
+import {get} from '../helper/request';
+const imagecheckin = require('../assets/bg_checkin.png');
+const imagecheckout =require('../assets/bg_checkout.png');
+const imagecheckinlate =require('../assets/bg_late.png');
 export default class home extends React.Component {
     constructor(props){
         super(props)
         this.state ={
-          username : '',
-          checkState : '', 
+          access_Token : '',
           loaded: false,
           LoginAlert: false,
           display : false,
-          opacitydisplay : false
+          opacitydisplay : false,
+          Data : [],
+          checkState :null, 
+          ontime : '',
         }
         this.onLoad();
       }
+      deleteOntime = async()=>{
+        await AsyncStorage.removeItem('ontime')
+        }
+
       triggerLogout(visible,opacity) {
         this.setState({display: visible,opacitydisplay:opacity})
         }
-        onLoad = async () => {
-            try {
-                const username = await AsyncStorage.getItem('Async_username')
-                this.setState({username : username})
-                console.log(this.state.username)
-                console.log(this.state.checkState)
-                const checkState  = await AsyncStorage.getItem('Async_checkState')                
-                this.setState({checkState  : checkState })
-            } catch (error) {
-                //console.log("onLoad"+error)
-            }
+
+      setOntime = async(status)=>{
+          await AsyncStorage.setItem('ontime',status)
+          //await AsyncStorage.setItem('Check',true)
         }
-        checkin = async () =>{
+
+      onLoad = async () => {
+                const access_Token = await AsyncStorage.getItem('access_Token')
+                const ontime = await AsyncStorage.getItem('ontime')
+                this.setState({access_Token : access_Token,ontime : ontime})
+                get('/user/profile')
+                 .then(res => {
+                   //const Data = res.data;
+                   this.setState({ Data : res.data }); 
+                 })
+
+                 get('/user/history/1')
+                 .then(res => {
+                  if(res.data[0]!=null){
+                    if(res.data[0].created_at.substring(3,13)==moment().format().substring(0,10)){
+                      if(res.data[0].checkout_at!=''&&res.data[0].checkout_at!=''){
+                        this.setState({checkState : 'checkin-checkout'})
+                        console.log('checkin-checkout')
+                  }else{
+                      if(res.data[0].checkout_at==''){
+                            this.setState({checkState : 'checkout'})
+                      }else{this.setState({checkState : 'checkin'})}
+                    }
+                  }
+                }
+              })
+          }
+
+      location = async() =>{
+          let { status } = await Location.requestPermissionsAsync();
+          let date = moment().format('HH:mm'); 
+          if (status !== 'granted') {
+                setErrorMsg('Permission to access location was denied');
+                  }
+          const location = await Location.getCurrentPositionAsync({})
+          if(location.coords.latitude>16.44190&&location.coords.longitude>102.80&&location.coords.latitude<16.4430&&location.coords.longitude<102.808947){
+              Alert.alert(
+                "","Check-in completed at "+ date,
+                [
+                  { text: "YES", onPress: () => 
+                    {   console.log("YES Pressed") 
+                        get('/user/checkin')
+                        .then(res => {
+                        this.setState({ontime : res.data.status,checkState : 'checkout'})
+                        this.setOntime(res.data.status)
+                      })
+                    }
+                }
+                ],
+                { cancelable: false }
+            );
+          }else{
+              Alert.alert(
+                '','Check-in does not complete. You are not in the office!!' ,
+                [
+                  { text: 'YES', onPress: () => 
+                    {}
+                  }
+                ],
+                { cancelable: false }
+              );
+          }
+        }
+
+      checkin = async () =>{
           Alert.alert(
-            '',
-            'Do you want to Check in ?',
+            "","Do you want to check-in?",
             [
               {
-                text: 'Cancel',
-                onPress: () => console.log('Cancel Pressed'),
-                style: 'cancel'
+                text: "No",
+                onPress: () => console.log("Cancel Pressed"),
               },
-              { text: 'OK', onPress: async () => {
-                console.log('OK Pressed')
-                console.log("click Checkin")
-                console.log(this.state.checkState)
-                let { status } = await Location.requestPermissionsAsync();
-                console.log(status)
-                let date = moment()
-                    .utcOffset('+07:00')
-                    .format('LT')
-                let setdate = moment().format('h');
-                let setdate1 = moment().format('mm');
-                let setdate2 = moment().format('a');
-                setdate = parseInt(setdate,'10')
-                setdate1 = parseInt(setdate1,'10')
-                console.log(date)
-                if (status !== 'granted') {
-                  setErrorMsg('Permission to access location was denied');
-                }
-                const location = await Location.getCurrentPositionAsync({})
-                console.log(location)
-                console.log(location.coords.latitude)
-                console.log(location.coords.longitude)
-                if(location.coords.latitude>16.44190&&location.coords.longitude>102.80
-                  &&location.coords.latitude<16.4430&&location.coords.longitude<102.808947){
-                  console.log("location complete")
-                  Alert.alert(
-                    'Alert',
-                    'Check-in is completed at '+date,
-                    [
-                      { text: 'OK', onPress: async() => {console.log('OK Pressed')
-                      this.setState({checkState : true}) 
-                      try {
-                        await AsyncStorage.setItem('Async_checkState', this.state.checkState)
-                      } catch (e) {
-                        console.log(e)
-                      }
-                     }}
-                    ],
-                    { cancelable: false }
-                  );
-                }
-                else{
-                  console.log(" Check-in is not successful you are not in the office!!")
-                  Alert.alert(
-                    'Alert',
-                    'Check-in is not successful you are not in the office!! ' + date,
-                    [
-                      { text: 'OK', onPress: () => {
-                        console.log('OK Pressed') 
-                        }
-                      }
-                    ],
-                    { cancelable: false }
-                  );
-                }
-            }
-          },
-            
+              { text: "YES", onPress: () =>{
+                this.location()}
+              }
             ],
             { cancelable: false }
           );
-        }
-        checkout = async () =>{
+       }
+
+      checkout = async () =>{
           Alert.alert(
-            "",
-            "Do you want to check out",
+            "","Do you want to check-out?",
             [
               {
-                text: "Cancel",
-                onPress: () => console.log("Cancel Pressed"),
+                text: "NO",
+                onPress: () => console.log("NO Pressed"),
                 style: "cancel"
               },
-              { text: "OK", onPress: async() => {
-                console.log("OK Pressed") 
-                let { status } = await Location.requestPermissionsAsync();
-                console.log(status)
-                let date = moment()
-                    .utcOffset('+07:00')
-                    .format('LT')
-                console.log(date)
-                if (status !== 'granted') {
-                  setErrorMsg('Permission to access location was denied');
-                }
-                const location = await Location.getCurrentPositionAsync({})
+              { 
+                text: "YES", onPress: async() => {
+                let date = moment().format('HH:mm'); 
                   Alert.alert(
-                    'Alert',
-                    'Check-out is completed at '+date,
+                    '','Check-out completed at '+date,
                     [
-                      { text: 'OK', onPress: async() => 
-                      {console.log('OK Pressed') 
-                      console.log(location)
-                      console.log(location.coords.latitude)
-                      console.log(location.coords.longitude)
-                      this.setState({checkState : false})
-                      try {
-                        await AsyncStorage.setItem('Async_checkState', this.state.checkState)
-                      } catch (e) {
-                        console.log(e)
-                      }
-                    }}
+                      { text: 'YES', onPress: async() => 
+                        {
+                          console.log('YES Pressed') 
+                          get('/user/checkout')
+                          .then(res => {
+                          this.deleteOntime()
+                          this.setState({checkState : 'checkin-checkout'})
+                        })
+                        }
+                    }
                     ],
                     { cancelable: false }
                   );
@@ -154,17 +150,23 @@ export default class home extends React.Component {
             ],
             { cancelable: false }
           );
-        }
-        logout = async () =>{
-                await AsyncStorage.removeItem('Async_username')
-                console.log("OK Pressed")
-                this.triggerLogout(false)   
-                Actions.loading()
-                }
+       }
+
+      logout = async () =>{
+          get('/user/logout')
+          .then(res => {
+            console.log(res.data)
+            })
+          await AsyncStorage.removeItem('access_Token')
+          console.log("YES Pressed")
+          this.triggerLogout(false)
+          Actions.loading()
+       }
+
     render() {
       let buttoncheckin,buttoncheckout,background;
-      if (this.state.checkState==false||this.state.checkState==null) {
-        background = image;
+      if (this.state.checkState=='checkin'||this.state.checkState==null) {
+        background = imagecheckin;
         buttoncheckin = <Checkinout onclick={this.checkin}
                               colorclick ={styles.colorbuttonuse}
                               styletextclick={styles.Textuse}
@@ -173,15 +175,31 @@ export default class home extends React.Component {
                               colorclick ={styles.colorbuttonuseunuse}
                               styletextclick={styles.Textunuse}
                               textclick="CHECK OUT"/>
-      } else {
-        background = image1;
+      }else if(this.state.checkState=='checkout'){
+        
+      if(this.state.ontime=="LATE"){
+        background = imagecheckinlate;
+      }else{
+          background = imagecheckout;
+        }
+        buttoncheckin = <Checkinout onclick={null}
+                        colorclick ={styles.colorbuttonuseunuse}
+                        styletextclick={styles.Textunuse}
+                        textclick="CHECK IN"/>
+        buttoncheckout = <Checkinout onclick={this.checkout}
+                        colorclick ={styles.colorbuttonuse}
+                        styletextclick={styles.Textuse}
+                        textclick="CHECK OUT"/>
+
+      }else if(this.state.checkState=='checkin-checkout'){
+        background = imagecheckin;
         buttoncheckin = <Checkinout onclick={null}
                               colorclick ={styles.colorbuttonuseunuse}
                               styletextclick={styles.Textunuse}
                               textclick="CHECK IN"/>
-        buttoncheckout = <Checkinout onclick={this.checkout}
-                              colorclick ={styles.colorbuttonuse}
-                              styletextclick={styles.Textuse}
+        buttoncheckout = <Checkinout onclick={null}
+                              colorclick ={styles.colorbuttonuseunuse}
+                              styletextclick={styles.Textunuse}
                               textclick="CHECK OUT"/>
       }
         return (
@@ -199,18 +217,18 @@ export default class home extends React.Component {
                   <Image source={require('../assets/icon_logout.png')} style={{width:30,height:30}}/>
                   </TouchableOpacity>
               </View>
-              <Infoframe name="Aekkarat Klomjit (Saam)" username="aekkarat_"/>
-              <Positionframe positionname='Graphic Design'/> 
+              {this.state.Data.map((item)=>(
+              <Infoframe key={item.nickname} firstname={item.firstname} lastname={item.lastname} nickname={item.nickname} username={item.username} positionname={item.position} image={item.image}/> ))}
               <View style={{flexDirection:"row",justifyContent: 'center',alignItems: 'center',paddingTop:30}}>        
               {buttoncheckin}
               {buttoncheckout} 
               </View>            
-          <ModalLogout
-            message = "Do you want to log-out?"
-            display = {this.state.display}
-            hide ={() => this.triggerLogout(false)}
-            logout = {() => this.logout()}
-          />
+                  <ModalLogout
+                    message = "Do you want to log-out?"
+                    display = {this.state.display}
+                    hide ={() => this.triggerLogout(false)}
+                    logout = {() => this.logout()}
+                  />
             </View>
             </View>
           </ScrollView>

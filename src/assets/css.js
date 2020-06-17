@@ -95,6 +95,19 @@ opacity2:{
   justifyContent: 'center',
   alignItems: 'center',    
   paddingTop:33,
-  opacity:0.1
+  opacity:0.1,
+  
+},
+mid: {
+  justifyContent: 'center',
+  alignItems: 'center',
+},
+separator: {
+  height: 0.5,
+  backgroundColor: 'rgba(0,0,0,0.4)',
+},
+loader:{
+  marginTop:10,
+  alignItems:'center'
 }
 });
