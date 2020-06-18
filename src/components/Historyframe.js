@@ -58,7 +58,7 @@ class Historyframe extends React.Component{
                   </View>
                   <View style={{...styles.rowcolumn,paddingTop:39}}>
                     <Text style={{...styles.SecBoldFontModal,fontWeight:'bold'}}>Note :   </Text><Text style={styles.FontModal}>{this.props.note}</Text></View>
-                <View style={styles.button}>
+                <View style={{...styles.button,paddingRight: 15,}}>
                   <TouchableOpacity style={styles.loginbutton}
                       onPress={() => {
                       this.setModalVisible(!this.state.modalVisible,!this.state.Historyframeopacity);

@@ -44,7 +44,6 @@ export default class home extends React.Component {
                 this.setState({access_Token : access_Token,ontime : ontime})
                 get('/user/profile')
                  .then(res => {
-                   //const Data = res.data;
                    this.setState({ Data : res.data }); 
                  })
 
@@ -206,8 +205,8 @@ export default class home extends React.Component {
       <ImageBackground source={background} style={{...styles.bg}}>
         <ScrollView>
           <View style={{...this.state.opacitydisplay
-                            ? styles.opacity2
-                            : styles.opacity1}}>
+                            ? styles.afteropacity
+                            : styles.beforeopacity}}>
           <View style={styles.container}>
               <View style={{position: 'absolute',right: -54,top: -9,paddingTop:0,}}>
                   <TouchableOpacity onPress={() => {this.triggerLogout(true,true)}} style={{ height: 52, 

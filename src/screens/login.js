@@ -29,8 +29,6 @@ export default class login extends React.Component {
         this.setState({errorMessage : "Please enter password.",coloruser:'black',colorpass:'red'})
       }
       else{ 
-        console.log(this.state.username)
-        console.log(this.state.password)
         post('/login',{"username" : this.state.username,"password" : this.state.password})
         .then((response) => {
           if (response.data.message=='Incorrect username or password'){

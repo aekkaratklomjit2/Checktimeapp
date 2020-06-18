@@ -30,7 +30,6 @@ export const styles = StyleSheet.create({
   button:{
     justifyContent: 'center',
     alignItems: 'center',    
-    paddingRight: 15,
     paddingTop:42,
     color :"#841584"
   },
@@ -86,17 +85,20 @@ colorbuttonuseunuse: {
     alignItems: 'center',
     backgroundColor: '#0000BB',
   },
-  opacity1:{
+  flexreport:{
+    flex:1,
+    //paddingTop:33,
+},
+  beforeopacity:{
     justifyContent: 'center',
     alignItems: 'center',    
     paddingTop:33,
-},
-opacity2:{
-  justifyContent: 'center',
-  alignItems: 'center',    
-  paddingTop:33,
-  opacity:0.1,
-  
+  },
+  afteropacity:{
+    justifyContent: 'center',
+    alignItems: 'center',    
+    //paddingTop:33,
+    opacity:0.1,
 },
 mid: {
   justifyContent: 'center',

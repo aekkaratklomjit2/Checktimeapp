@@ -1,13 +1,9 @@
 import React from 'react'
-import { View,ImageBackground,AsyncStorage,FlatList,ActivityIndicator} from 'react-native'
+import { View,ImageBackground,AsyncStorage,FlatList,ActivityIndicator,Text, VirtualizedList} from 'react-native'
 import {get} from '../helper/request';
 import {styles} from '../assets/css.js';
 import { Historyframe,InfoHisframe } from '../components/';
 import { SearchBar } from 'react-native-elements';
-// import { ScrollView } from 'react-native-gesture-handler';
-// import { isLoading } from 'expo-font';
-//import { cos } from 'react-native-reanimated';
-
 
 export default class report extends React.Component {
     constructor(prop){
@@ -34,13 +30,12 @@ export default class report extends React.Component {
                    const Dataprofile = res.data;
                    this.setState({ Dataprofile: Dataprofile });
                  })
-        //console.log(this.state.page)
-        get('/user/history/'+this.state.page)
+        get('/user/history/1')
         .then(res => { 
             this.setState({
+              isLoading:false,
               Datahistory : [...this.state.Datahistory , ...res.data],
               temp: [...this.state.temp , ...res.data],
-              isLoading:false
              })
         });     
       }
@@ -51,18 +46,19 @@ export default class report extends React.Component {
           get('/user/history/'+this.state.page)
           .then(res => { 
           setTimeout(() => {
-            this.setState({
-              Datahistory : [...this.state.Datahistory , ...res.data],
-              temp: [...this.state.temp , ...res.data],
-              isLoading:false
-             }) }, 1000);
+              this.setState({
+                Datahistory : [...this.state.Datahistory , ...res.data],
+                temp: [...this.state.temp , ...res.data],
+                isLoading:false
+               })
+            }, 1000);
           });
         }else{
           get('/user/history/1')
           .then(res => { 
             this.setState({
               Datahistory : res.data,
-              temp: [...this.state.temp , ...res.data],
+              temp: res.data,
               isLoading:false,refreshing:false
               })
           });
@@ -105,13 +101,15 @@ export default class report extends React.Component {
         this.setState({
           page:1,
           refreshing:true,
-          checkfirstpage:false,
+          checkfirstpage:false, 
         },
           ()=>{this.getData()})
       }
 
       renderHeader =() =>{
-        return <View style={{paddingBottom:15,width:315,height:undefined}}>
+        return (
+              <View style={styles.mid}>
+                <View style={{width:320,paddingBottom:15}}>
                   <SearchBar 
                       inputStyle={{paddingLeft:15,fontSize:15,color:'black'}}
                       containerStyle={{backgroundColor:'white',borderColor:'black',borderWidth:1}} 
@@ -121,39 +119,38 @@ export default class report extends React.Component {
                       placeholderTextColor='#747474'
                       editable={true}
                       value={this.state.searchTxt}
-                      onChangeText={this.updateSearch}/>
+                      onChangeText={text => this.SearchFilterFunction(text)}
+                      onClear={text => this.SearchFilterFunction('')}/>
                 </View>
+                </View>
+        )
       }
 
-      updateSearch=searchTxt=>{
-        this.setState({searchTxt},()=>{
-            if(''==searchTxt){
-              this.setState({Datahistory:[...this.state.temp]})
-              return;
-            }
-          //console.log(this.state.searchTxt)
-        this.state.Datahistory = this.state.temp.filter(function(item){
-            let date = item.created_at.substring(0,3)+' '+item.created_at.substring(11,13) +"/"+item.created_at.substring(8,10)+"/"+item.created_at.substring(3,7)
-            return date.includes(searchTxt)
-            })
-            .map(function({created_at,checkin_at,checkout_at,status,note}){
-            //console.log(created_at)
-              return {created_at,checkin_at,checkout_at,status,note}
-          })
-        })
+      SearchFilterFunction(text) {
+          const newData = this.state.temp.filter(function(item) {
+          const itemSet =  item.created_at.substring(0,3)+' '+item.created_at.substring(11,13) +"/"+item.created_at.substring(8,10)+"/"+item.created_at.substring(3,7)
+          const itemData = itemSet ? itemSet.toUpperCase() : ''.toUpperCase();
+          const textData = text.toUpperCase();
+          return itemData.indexOf(textData) > -1;
+        });
+        this.setState({
+          Datahistory: newData,
+          searchTxt:text,
+        });
       }
 
       render() {
           return (
-          <ImageBackground source={require('../assets/bg_his.png')} style={styles.bg}>
-            <View style={{...this.state.modalVisible
-                            ? styles.opacity2
-                            : styles.opacity1}}>
-              <View style={{paddingTop:70,paddingBottom:105,  justifyContent: 'center',alignItems: 'center'}}>         
+          <ImageBackground source={require('../assets/bg_history.png')} style={styles.bg}>
+                        <View style={{...this.state.modalVisible
+                            ? styles.afteropacity
+                            : styles.flexreport}}>
+            <View style={{flex: 1,justifyContent: 'center',alignItems: 'center'}} >
                   {this.state.Dataprofile.map((item)=>(
                   <InfoHisframe key={item.username} firstname={item.firstname+''} lastname={item.lastname} username={item.username} image={item.image}/> ))}
-                  <View>
-                  <FlatList
+            </View>
+            <View style={{flex: 3,justifyContent: 'center'}} >
+                    <FlatList
                     ListHeaderComponent={this.renderHeader}
                     data={this.state.Datahistory}
                     extraData={this.state}
@@ -164,10 +161,10 @@ export default class report extends React.Component {
                     ListFooterComponent={this.renderFooter}
                     refreshing={this.state.refreshing}
                     onRefresh={this.handleRefesh}/> 
-                  </View> 
-              </View>    
             </View>
+            </View>    
           </ImageBackground> 
+
           )
         }
     }
